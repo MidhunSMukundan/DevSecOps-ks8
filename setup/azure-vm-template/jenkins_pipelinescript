@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+        stages {
+        stage('Hello')
+        {
+            steps {
+            
+                echo 'Hello World'
+                sh "git version"
+                    }
+        }
+        
+        stage('mavin version')
+        {
+            steps{
+                echo 'mavin version'
+                sh "mvn -v"
+            }
+        }
+        
+        stage('docker version')
+        {
+            steps {
+            
+                echo 'docker version'
+                sh "docker -v"
+            }
+        }
+        
+        stage('kubernetes version')
+        {
+            steps{
+                  withKubeConfig([credentialsId: 'kubeconfig']) {
+                sh "kubectl version --short"
+            }
+                
+            }
+        }
+    }
+}
